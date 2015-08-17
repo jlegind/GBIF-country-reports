@@ -7,3 +7,4 @@ FROM prod_b.occurrence_hdfs o1 JOIN prod_b.occurrence_hdfs o2 ON o1.gbifid = o2.
 GROUP BY o1.countrycode
 
 ORDER BY o1.countrycode
+
