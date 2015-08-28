@@ -1,4 +1,4 @@
-#...comment goes here
+#Makes the file for the kingdom ranks in the taxon matrix
 
 library(dplyr)
 mycsv <- read.csv("kingdom_matrix.csv")
