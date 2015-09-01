@@ -1,6 +1,5 @@
 library(dplyr)
 mycsv<-read.csv("../class_matrix.csv", na.strings="NAN")
-#enfor<-read.csv("class_matrix_group_enforce.csv", na.strings="NAN")
 
 enforcer <- data.frame(country=character(), taxon=character(),stringsAsFactors = FALSE)
 
@@ -19,11 +18,8 @@ df_class <- data.frame(iso_country$country)
 
 for (j in fct){
     newdf <- combo[combo$taxon == j, c('jan.class_matrix._c2','jan.class_matrix.increase')]
-    for (k in colnames(newdf)){
-        #print(k)
-        #print(head(newdf[,k]))
+    for (k in colnames(newdf)){        
         df_class[,paste(k,j, sep="")] <- newdf[,k]    
     }    
 }
 
-#combo[combo$t2.kingdom=="Animalia",c('X_c2','X_c3')]
