@@ -1,13 +1,31 @@
+#Makes the file for the phylum ranks in the taxon matrix - see comments to the r_taxon_matrix script
 library(dplyr)
-mycsv<-read.csv("phylum_matrix.csv", na.strings="NAN")
-#enfor<-read.csv("speciesmatrix_group_enforce.csv", na.strings="NAN")
-country<-as.character(unique(enfor[,1]))
-countries<-data.frame(country)
-combo<-left_join(countries,mycsv,by=c('country'='t1.country'),type="left")
-combo<- data.frame(lapply(combo, as.character), stringsAsFactors = FALSE)
- combo[is.na(combo)]<-0
-combo$t1.phylum[combo$t1.phylum == 0]<- "Mollusca"
-df_phylum <- combo
-colnames(df_phylum)[3:4]<-c("mollusca_c2","mollusca_c3")
+
+mycsv<-read.csv("../phylum_matrix.csv", na.strings="NAN")
+
+enforcer <- data.frame(country=character(), taxon=character(),stringsAsFactors = FALSE)
+
+for (j in iso_country[,1]){
+    for (k in unique(mycsv[,2])){        
+        enforcer[nrow(enforcer)+1, ] <- c(j, k)
+    }
+}
+
+#left_join from the dplyr package is used to join enforcer and mycsv. lapply and the as.character function coerces factors to char
+combo <- data.frame(lapply(left_join(enforcer, mycsv, by=c('taxon'='jan.phylum_matrix.phylum', 'country'='jan.phylum_matrix.country')), as.character), stringsAsFactors = F)
+#converts NAs to 0
+combo[is.na(combo)] <- 0
+
+fct <- as.character(unique(combo[,2]))
+
+df_phylum <- data.frame(iso_country$country)
+
+for (j in fct){
+    #each element in fct gets a new dataframe that is then pasted onto df
+    newdf <- combo[combo$taxon == j, c('jan.phylum_matrix.total','jan.phylum_matrix.increase')]
+    for (k in colnames(newdf)){
+        df_phylum[,paste(k,j, sep="")]<-newdf[,k]    
+    }    
+}
 
  
