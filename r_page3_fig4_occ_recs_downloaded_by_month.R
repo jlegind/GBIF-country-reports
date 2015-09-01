@@ -2,7 +2,6 @@
 
 require(ggplot2)
 require(plyr)
-require(scales)
 
 mycsv <- read.csv("../fig4_records_by_month_downloaded_from_country.csv")
 mycsv <- left_join(iso_country, mycsv, c('iso_code'='country'))
@@ -15,8 +14,9 @@ for (j in unique(mycsv$iso_code)){
     plt <- ggplot(bymonth, aes(x = `year_month`, y = as.integer(sum)/1000, group = iso_code)) + 
         geom_area(position = "identity", colour="black", fill="blue", alpha=0.2) + 
         geom_line(size = 1.5, colour="blue", alpha=0.6) +
-        theme(axis.text.x = element_text(angle = 45, hjust = 1))
-    
+        theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+        scale_y_continuous(name="Records downloaded (in thousands)") +
+        scale_x_discrete(name="")    
     
     ggsave(plt, file=paste("downloaded_records_by_month_for_", j, ".png", sep=""), path="g:/Country reports aux/test_ggsave2")
 }
