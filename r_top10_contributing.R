@@ -7,8 +7,7 @@ mylink=mylink[-1]
 enfor <- data.frame(country=character(), rank=integer(), stringsAsFactors = FALSE)
 
 for (j in 1:10){
-    for (k in mylink){
-        #print(c(k, j))
+    for (k in mylink){        
         enfor[nrow(enfor)+1, ] <- c(k, j)
     }
 }
@@ -24,9 +23,7 @@ df_top10<-data.frame(countries)
 
 for (j in fct){
     newdf<-top_contributors[top_contributors$rank==j, c('publisher_country','ct')]
-    for (k in colnames(newdf)){
-        #print(k)
-        #print(head(newdf[,k]))
+    for (k in colnames(newdf)){        
         df_top10[,paste(k,j, sep="")]<-newdf[,k]    
     }    
 }

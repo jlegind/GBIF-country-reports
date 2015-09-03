@@ -5,8 +5,7 @@ topp <- read.csv("../Page7_top_contrib_for_R.csv", na.strings="", encoding="UTF-
 enforcer <- data.frame(country=character(), rank=integer(), stringsAsFactors = FALSE)
 
 for (j in 1:8){
-    for (k in iso_country$iso_code){
-        #print(c(k, j))
+    for (k in iso_country$iso_code){        
         enforcer[nrow(enforcer)+1, ] <- c(k, j)
     }
 }
