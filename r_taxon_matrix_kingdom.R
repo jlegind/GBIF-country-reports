@@ -20,15 +20,14 @@ combo[is.na(combo)] <- 0
 
 #Vectors for creating taxon columns in new data frame
 fct <- as.character(unique(combo[,2]))
-countries <- as.character(unique(combo[,1]))
 
-df <- data.frame(countries)
+df_kingdom <- data.frame(iso_country$iso_code)
 
 for (j in fct){
     #each element in fct gets a new dataframe that is then pasted onto df
     newdf <- combo[combo$taxon == j, c('kingdom_matrix._c2','kingdom_matrix.increase')]
     for (k in colnames(newdf)){
-        df[,paste(k,j, sep="")]<-newdf[,k]    
+        df_kingdom[,paste(k,j, sep="")]<-newdf[,k]    
     }    
 }
 

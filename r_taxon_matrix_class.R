@@ -14,7 +14,7 @@ combo <- data.frame(lapply(combo, as.character), stringsAsFactors = FALSE)
 combo[is.na(combo)] <- 0
 
 fct <- as.character(unique(combo[,2]))
-df_class <- data.frame(iso_country$country)
+df_class <- data.frame(iso_country$iso_code)
 
 for (j in fct){
     newdf <- combo[combo$taxon == j, c('jan.class_matrix._c2','jan.class_matrix.increase')]
