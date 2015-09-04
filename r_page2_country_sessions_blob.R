@@ -9,7 +9,6 @@ query.list <- Init(start.date = "2014-07-01",
                    table.id = "ga:73962076")
 ga.query <- QueryBuilder(query.list)
 ga.data <- GetReportData(ga.query, token, split_daywise = TRUE)
-#ga.data_test <- GetReportData(ga.query, token)
 
 #aggregate() function needs this format to display the groups: the cbind is the columns to sum and the ~ country is 
 #the group by.
