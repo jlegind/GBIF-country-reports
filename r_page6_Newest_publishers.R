@@ -4,12 +4,13 @@ library(rgbif)
 library(dplyr)
 
 newest_publishers <- data.frame(country=character(), title=character(), rank=integer(), stringsAsFactors = FALSE)
+limits = 4 #Max number of organizations/publishers returned
 
 # Uses the rgbif organizations() function to retrieve new publishers by country 
 for (k in iso_country$iso_code){ 
-    new_orgs <- organizations(query=k, limit=4)
-    if (new_orgs$meta$count == 0){ new_orgs$data$title = rep("", 4) }
-    for (j in 1:4){
+    new_orgs <- organizations(query=k, limit=limits)
+    if (new_orgs$meta$count == 0){ new_orgs$data$title = rep("", limits) }
+    for (j in 1:limits){
         newest_publishers[nrow(newest_publishers)+1, ] <- c(k, new_orgs$data$title[j], j)    
     }    
 }
