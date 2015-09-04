@@ -17,11 +17,11 @@ top_contributors[is.na(top_contributors)] <- ""
 fct<-as.character(unique(top_contributors$rank))
 countries<-as.character(unique(top_contributors$country))
 
-df_top10_contributing<-data.frame(countries)
+df_top8_contributing<-data.frame(countries)
 
 for (j in fct){
     newdf<-top_contributors[top_contributors$rank==j, c('title','count')]
     for (k in colnames(newdf)){
-        df_top10_contributing[,paste(k, "rank",j , sep="_")]<-newdf[,k]    
+        df_top8_contributing[,paste(k, "rank",j , sep="_")]<-newdf[,k]    
     }    
 }
