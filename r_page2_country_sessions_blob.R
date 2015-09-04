@@ -14,3 +14,5 @@ ga.data <- GetReportData(ga.query, token, split_daywise = TRUE)
 #aggregate() function needs this format to display the groups: the cbind is the columns to sum and the ~ country is 
 #the group by.
 ga_prom <- aggregate(cbind(sessions, users, pageviews) ~ country + countryIsoCode, data=ga.data, sum)
+
+worldwide[,2:5] <- data.frame(sapply(worldwide[,2:5], FUN=function(x) format(round(as.numeric(x), digits = 2), nsmall = 2)), stringsAsFactors = F)
