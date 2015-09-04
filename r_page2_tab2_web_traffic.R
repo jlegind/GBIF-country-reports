@@ -1,4 +1,4 @@
-#Creates Table 2; worldwide and national figures for web traffic
+#Creates Table 2; Worldwide and National figures for web traffic
 
 query.list <- Init(start.date = "2014-07-01",
                    end.date = "2015-06-30",                   
