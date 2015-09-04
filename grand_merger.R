@@ -1,5 +1,5 @@
 require(dplyr)
-#iso_country <- read.csv("iso_countries.csv", encoding="UTF-8", na.strings="NAN") 
+
 iso_country <- read.csv("country_iso_GBIF.csv", encoding="UTF-8", na.strings="NAN") 
 iso_country[] <- lapply(iso_country, as.character)
 #In case of UTF BOM
