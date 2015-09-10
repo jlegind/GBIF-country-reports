@@ -1,19 +1,26 @@
 #Create the "Newest publishers from <country>" page 6
 #Depends on data frame 'iso_country' from grand_merger.R
-library(rgbif)
+library(jsonlite)
 library(dplyr)
 
 newest_publishers <- data.frame(country=character(), title=character(), rank=integer(), stringsAsFactors = FALSE)
 limits = 4 #Max number of organizations/publishers returned
+cutoff_date = "2015-07-01"
 
-# Uses the rgbif organizations() function to retrieve new publishers by country 
-for (k in iso_country$country){ 
-    new_orgs <- organizations(query=k, limit=limits)
-    print(new_orgs$data$title)
-    if (new_orgs$meta$count == 0){ new_orgs$data$title = rep("", limits) }
-    for (j in 1:limits){
-        newest_publishers[nrow(newest_publishers)+1, ] <- c(k, new_orgs$data$title[j], j)    
-    }    
+# Uses the JSONLite to retrieve new publishers by country 
+for (k in iso_country$iso_code){ 
+    new_orgs <- fromJSON(paste("http://api.gbif.org/v1/organization?country=", k, sep=""))
+    res <- new_orgs$results
+    
+    if (new_orgs$count == 0){ 
+        res$title = rep("", limits) 
+    }
+    else{            
+            res <- res[order(res$created, decreasing = T),][as.Date(res$created) < cutoff_date,]                     
+    }
+    for (j in 1:limits){    
+        newest_publishers[nrow(newest_publishers)+1, ] <- c(k, res$title[j], j)    
+    }
 }
 
 newest_publishers[is.na(newest_publishers)] <- ""
