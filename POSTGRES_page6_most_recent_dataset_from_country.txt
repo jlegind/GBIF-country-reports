@@ -5,7 +5,7 @@ WHEN d.type = 'METADATA' THEN 'Metadata dataset'
 WHEN d.type = 'CHECKLIST' THEN 'Checklist dataset'
 WHEN d.type = 'OCCURRENCE' THEN 'Occurrence dataset' 
 END AS type,
- to_char(d.modified, 'DD Mon, YYYY') AS date, o.title AS organization_title, row_number() OVER (PARTITION BY o.country ORDER BY date(d.modified) DESC) AS rn FROM organization o
+ to_char(d.modified, 'DD Mon, YYYY') AS date, o.title AS organization_title, row_number() OVER (PARTITION BY o.country ORDER BY date(d.created) DESC) AS rn FROM organization o
 JOIN dataset d ON o.key = d.publishing_organization_key
-WHERE d.deleted IS NULL AND date(d.modified) < '2015-07-01'
-)t1 WHERE rn <=5
+WHERE d.deleted IS NULL AND date(d.created) < '2015-07-01'
+)t1 WHERE rn <=5 
