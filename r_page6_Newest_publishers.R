@@ -16,7 +16,7 @@ for (k in iso_country$iso_code){
         res$title = rep("", limits) 
     }
     else{            
-            res <- res[order(res$created, decreasing = T),][as.Date(res$created) < cutoff_date,]                     
+            res <- res[order(res$created, decreasing = T),][as.Date(res$created) < cutoff_date, ]                     
     }
     for (j in 1:limits){    
         newest_publishers[nrow(newest_publishers)+1, ] <- c(k, res$title[j], j)    
@@ -25,13 +25,13 @@ for (k in iso_country$iso_code){
 
 newest_publishers[is.na(newest_publishers)] <- ""
 
-fct<-as.character(unique(newest_publishers$rank))
+fct <- as.character(unique(newest_publishers$rank))
 df_newest_publishers <- data.frame(iso_country$iso_code)
 
 for (j in fct){
-    newdf<-newest_publishers[newest_publishers$rank==j, c('title','rank')]
+    newdf <- newest_publishers[newest_publishers$rank==j, c('title','rank')]
     for (k in colnames(newdf)){
-        df_newest_publishers[,paste(k, "rank",j , sep="_")]<-newdf[,k]    
+        df_newest_publishers[,paste(k, "rank",j , sep="_")] <- newdf[,k]    
     }    
 }
 
