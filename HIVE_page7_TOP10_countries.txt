@@ -1,0 +1,9 @@
+SELECT t2.country AS country, t2.publisher AS publisher_country, t2.ct as ct, t2.rank_ AS rank FROM (
+SELECT t1.ccode AS country, t1.pubcode AS publisher, t1.ct AS ct, row_number() OVER (PARTITION BY t1.ccode ORDER BY t1.ct DESC) AS rank_ FROM 
+(
+SELECT count(o.gbifid) AS ct, o.publishingcountry AS pubcode, o.countrycode AS ccode FROM occurrence_hdfs o  
+ GROUP BY o.countrycode, o.publishingcountry
+  )t1
+  )t2
+  WHERE t2.rank_ <= 10
+  ORDER BY country, rank, ct, publisher_country
