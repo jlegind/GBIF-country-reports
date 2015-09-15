@@ -13,8 +13,14 @@ for (j in iso_country[,1]){
     }
 }
 
+newnames <- vector()
+
+#Strips out all the col name prefixes so it reads cleaner
+for (j in colnames(mycsv)){ newnames <- c(newnames, strsplit(j, "\\.")[[1]][2]) }
+names(mycsv) <- newnames
+
 #left_join from the dplyr package is used to join enforcer and mycsv. lapply and the as.character function coerces factors to char
-combo <- data.frame(lapply(left_join(enforcer, mycsv, by=c('taxon'='kingdom_matrix.kingdom', 'country'='kingdom_matrix.country')), as.character), stringsAsFactors = F)
+combo <- data.frame(lapply(left_join(enforcer, mycsv, by=c('taxon'='kingdom', 'country'='country')), as.character), stringsAsFactors = F)
 #converts NAs to 0
 combo[is.na(combo)] <- 0
 
@@ -25,7 +31,7 @@ df_kingdom <- data.frame(iso_country$iso_code)
 
 for (j in fct){
     #each element in fct gets a new dataframe that is then pasted onto df
-    newdf <- combo[combo$taxon == j, c('kingdom_matrix._c2','kingdom_matrix.increase')]
+    newdf <- combo[combo$taxon == j, c('total','increase')]
     for (k in colnames(newdf)){
         df_kingdom[,paste(k,j, sep="")]<-newdf[,k]    
     }    
