@@ -1,7 +1,6 @@
-DROP TABLE IF EXISTS class_matrix;
--- Base table for taxon matrix
-CREATE TABLE class_matrix AS
-SELECT t1.country, t1.class_, sum(`_c2`)+sum(`_c3`), 
+-- SQL for the class part of the taxon matrix
+
+SELECT t1.country AS country, t1.class_ AS class, sum(`_c2`)+sum(`_c3`) AS total, 
 CASE WHEN round((sum(`_c2`)/sum(`_c3`))*100) IS NULL THEN 'No prior occurrences' ELSE round((sum(`_c2`)/sum(`_c3`))*100) END AS increase
 
 FROM
