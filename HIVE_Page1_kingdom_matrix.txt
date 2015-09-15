@@ -1,6 +1,6 @@
 -- SQL for the kingdom rank only, page1 taxon matrix 
 
-SELECT t1.country, t1.kingdom , sum(`_c2`)+sum(`_c3`), 
+SELECT t1.country AS country, t1.kingdom AS kingdom, sum(`_c2`)+sum(`_c3`) AS total, sum(`_c2`) AS new_records,
 CASE WHEN round((sum(`_c2`)/sum(`_c3`))*100) IS NULL THEN 'No prior occurrences' ELSE round((sum(`_c2`)/sum(`_c3`))*100) END AS increase
 
 FROM
@@ -20,9 +20,9 @@ year(to_date(from_unixtime(cast(o1.fragmentcreated/1000 AS int)))),year(to_date(
   
   UNION ALL
   
-SELECT t1.country, 
+SELECT t1.country AS country, 
 CASE WHEN t1.kingdom = '' THEN 'Unknown' ELSE t1.kingdom END AS kingdom, 
-sum(`_c2`)+sum(`_c3`), 
+sum(`_c2`)+sum(`_c3`) AS total, sum(`_c2`) AS new_records,
 CASE WHEN round((sum(`_c2`)/sum(`_c3`))*100) IS NULL THEN 'No prior occurrences' ELSE round((sum(`_c2`)/sum(`_c3`))*100) END AS increase
 
 FROM
