@@ -1,7 +1,6 @@
- DROP TABLE IF EXISTS jan.phylum_matrix;
--- Base table for taxon matrix
-CREATE TABLE jan.phylum_matrix AS 
-SELECT t1.country, t1.phylum AS phylum, sum(`_c2`)+sum(`_c3`) AS total, 
+-- SQL for the phylum part of the taxon matrix
+
+SELECT t1.country AS country, t1.phylum AS phylum, sum(`_c2`)+sum(`_c3`) AS total, 
 CASE WHEN round((sum(`_c2`)/sum(`_c3`))*100) IS NULL THEN 'No prior occurrences' ELSE round((sum(`_c2`)/sum(`_c3`))*100) END AS increase 
 
 FROM
