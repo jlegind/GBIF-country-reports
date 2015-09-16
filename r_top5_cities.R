@@ -15,8 +15,10 @@ ga.data <- GetReportData(ga.query, token, paginate_query = T)
 top5 <- group_by(ga.data, countryIsoCode)
 total_traffic <- summarise(top5, total=sum(as.integer(sessions)))
 #Creates data frame for total sessions by country. Works because of the group_by()
-top5 <- top_n(top5, 5)
+top5 <- top_n(top5, 6)
 #group_by() and top_n() are dplyr functions that simulate SQL. Above could be written more concisely
+
+top5 <- top5[which(top5$city != "(not set)"),]
 
 top5 <- left_join(top5, total_traffic, by='countryIsoCode')
 top5$percentage <- format(round((top5$sessions/top5$total)*100, digits=2), nsmall = 2)
