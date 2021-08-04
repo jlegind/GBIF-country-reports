@@ -18,3 +18,8 @@ The snapshot rows to be subtracted are set here:
 
     rr <- ff %>%
     mutate(added_records = occurrenceCount - filter(., snapshot == '2021-01-01') %>% pull(occurrenceCount))
+
+## Future added features
+There could be other csv files added and analyzed from https://analytics-files.gbif-uat.org/
+
+For instance a 
